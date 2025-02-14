@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<title>Heavy Lover</title>
 <style>
 
     body{
@@ -45,6 +46,8 @@
         <button onclick="return validateForm()">Submit</button>
     </form>
 
+    <p id="shareable-link" style="display: none;"></p>
+
     <script>
         function validateForm() {
             const email = document.getElementById('email').value
@@ -64,18 +67,23 @@
     return true; // Form submits if valid
     } 
 
-        function generateLink(event) {
-        event.preventDefault(); // Prevent form from actually submitting
+    function generateLink(event) {
+    event.preventDefault(); // Prevent form from actually submitting
 
-        const email = document.getElementById('email').value;
-        if (!email) {
-            alert("Please enter an email.");
+    const email = document.getElementById('email').value;
+    if (!email) {
+        alert("Please enter an email.");
         return;
-        }
-
-        // Redirect to response page with email as a URL parameter
-        window.location.href = `response.html?email=${encodeURIComponent(email)}`;
     }
+
+    // Generate the shareable link
+    const link = `https://BlazeSam.github.io/response.html?email=${encodeURIComponent(email)}`;
+    
+    // Show the generated link
+    const linkDisplay = document.getElementById("shareable-link");
+    linkDisplay.innerHTML = `Share this link: <a href="${link}" target="_blank">${link}</a>`;
+    linkDisplay.style.display = "block";
+}
     </script>
     
 </html>
