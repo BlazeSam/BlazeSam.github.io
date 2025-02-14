@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<style>
+
+    body{
+        background-image: url(./hearts.jpg);
+        text-align: center
+    }
+    h1,label {
+        color:red;
+    }
+
+    h5 {
+        color: blue;
+    }
+    
+    button {
+            background-color: pink;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: hotpink;
+        }
+</style>
+
+
+<html>
+    <body>
+        <h1>CUTE VALENTINE</h1>
+        <h5>by Lafiaji Samuel</h5>
+        <h2>            </h2>
+    </body>
+
+    <form onsubmit= "generateLink(event)">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br><br>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" required>
+        <h6></h6>   
+
+        <button onclick="return validateForm()">Submit</button>
+    </form>
+
+    <script>
+        function validateForm() {
+            const email = document.getElementById('email').value
+            const name = document.getElementById("name").value;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Proper email regex
+
+    if (email === "" || name === "") {
+        alert("Please fill in all fields.");
+        return false;
+    }
+
+    if (!emailPattern.test(email)) { 
+        alert("Please enter a valid email address.");
+        return false;
+    }
+
+    return true; // Form submits if valid
+    } 
+
+        function generateLink(event) {
+        event.preventDefault(); // Prevent form from actually submitting
+
+        const email = document.getElementById('email').value;
+        if (!email) {
+            alert("Please enter an email.");
+        return;
+        }
+
+        // Redirect to response page with email as a URL parameter
+        window.location.href = `response.html?email=${encodeURIComponent(email)}`;
+    }
+    </script>
+    
+</html>

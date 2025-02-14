@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Charset</title>
+<style>
+    body {
+        background-color: white;
+        background-image: url(./hearts.jpg);
+        text-align: center;
+    }
+    
+    h1{
+        color: red;
+    }
+
+    h2{
+        color: hotpink
+    }
+    .button {
+        transition-duration: 0.4s;
+    }
+
+    .button:hover {
+    background-color: purple; /* Green */
+    color: white;
+    }
+    
+    .button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+    }
+</style>
+</head>
+<body>
+
+<h2>I would love to be your Valentine
+<br><br>
+    <h2>Would you please be mine? </h2>
+<button class="button" onclick="sendEmail(Yes)">Yes</button>
+<button onclick="sendEmail(No)">No</button>
+
+<!-- Hidden Audio -->
+<audio id="bg-music" autoplay loop>
+    <source src="ed.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const audio = document.getElementById("bg-music");
+
+        // Ensure autoplay works after user interaction
+        document.body.addEventListener("click", function() {
+            if (!audio.paused) {
+                audio.play().catch(error => console.log("Autoplay blocked:", error));
+            }
+        }, { once: true });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+    // Get email from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get("email");
+
+    if (!email) {
+        alert("Email is missing! Please go back and enter your email.");
+    }
+
+    window.sendEmail = function (response) {
+        fetch("https://your-railway-backend-url.com/send-email", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, response })
+        })
+        .then(res => res.json())
+        .then(data => alert("Email Sent!"))
+        .catch(error => console.error("Error:", error));
+    };
+});
+
+</script>
+
+</body>
+</html>
