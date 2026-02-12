@@ -1,89 +1,99 @@
 <!DOCTYPE html>
 <title>Heavy Lover</title>
-<style>
 
-    body{
-        background-image: url(./hearts.jpg);
+<head>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+</head>
+
+
+<style>
+    body {
+        background-image: url(./img/hearts.jpg);
         text-align: center
     }
-    h1,label {
-        color:red;
+
+    h1,
+    label {
+        color: rgb(0, 0, 0);
+        font-family: Agbalumo;
     }
 
-    h5,p {
+    h5,
+    p {
         color: blue;
     }
-    
+
     button {
-            background-color: pink;
-            color: white;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+        background-color: pink;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
 
-        button:hover {
-            background-color: hotpink;
-        }
+    button:hover {
+        background-color: hotpink;
+    }
 </style>
-
-
 <html>
-    <body>
-        <h1>CUTE VALENTINE</h1>
-        <h5>by Lafiaji Samuel</h5>
-        <h2>            </h2>
-    </body>
 
-    <form onsubmit= "generateLink(event)">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <br><br>
+<body>
+    <h1 style="color: hotpink;">CUTE VALENTINE</h1>
+    <h4 style="font-family: Agbalumo;">by Lafiaji Samuel</h4>
+    <!-- <h2> </h2> -->
+</body>
 
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email" required>
-        <h6></h6>   
+<form onsubmit="generateLink(event)">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <br><br>
 
-        <button onclick="return validateForm()">Submit</button>
-    </form>
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" required>
+    <h6></h6>
 
-    <p id="shareable-link" style="display: none;"></p>
+    <button onclick="return validateForm()">Submit</button>
+</form>
 
-    <script>
-        function validateForm() {
-            const email = document.getElementById('email').value
-            const name = document.getElementById("name").value;
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Proper email regex
+<p id="shareable-link" style="display: none;"></p>
 
-    if (email === "" || name === "") {
-        alert("Please fill in all fields.");
-        return false;
+<script>
+    function validateForm() {
+        const email = document.getElementById('email').value
+        const name = document.getElementById("name").value;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Proper email regex
+
+        if (email === "" || name === "") {
+            alert("Please fill in all fields.");
+            //return false;
+            return true;
+        }
+
+        if (!emailPattern.test(email)) {
+            alert("Please enter a valid email address.");
+            //return false;
+            return true;
+        }
+
+        return true; // Form submits if valid
     }
-
-    if (!emailPattern.test(email)) { 
-        alert("Please enter a valid email address.");
-        return false;
-    }
-
-    return true; // Form submits if valid
-    } 
 
     function generateLink(event) {
-    event.preventDefault(); // Prevent form from actually submitting
+        event.preventDefault(); // Prevent form from actually submitting
 
-    const email = document.getElementById('email').value;
-    if (!email) {
-        alert("Please enter an email.");
-        return;
+        const email = document.getElementById('email').value;
+        if (!email) {
+            alert("Please enter an email.");
+            return;
+        }
+
+        // Generate the shareable link
+        const link = `https://BlazeSam.github.io/response.html?email=${encodeURIComponent(email)}`;
+
+        // Show the generated link
+        const linkDisplay = document.getElementById("shareable-link");
+        linkDisplay.innerHTML = `Share this link: <a href="${link}" target="_blank">${link}</a>`;
+        linkDisplay.style.display = "block";
     }
+</script>
 
-    // Generate the shareable link
-    const link = `https://BlazeSam.github.io/response.html?email=${encodeURIComponent(email)}`;
-    
-    // Show the generated link
-    const linkDisplay = document.getElementById("shareable-link");
-    linkDisplay.innerHTML = `Share this link: <a href="${link}" target="_blank">${link}</a>`;
-    linkDisplay.style.display = "block";
-}
-    </script>
-    
 </html>
