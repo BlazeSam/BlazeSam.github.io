@@ -1,53 +1,56 @@
 <!DOCTYPE html>
-<title>Heavy Lover</title>
+<title>Love Note</title>
 
 <head>
-    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Agbalumo&display=swap" rel="stylesheet">
 </head>
 
 
 <style>
     body {
         background-image: url(./img/hearts.jpg);
-        text-align: center
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
     }
 
     h1,
     label {
-        color: rgb(0, 0, 0);
-        font-family: Agbalumo;
-    }
-
-    h5,
-    p {
-        color: blue;
+        color: #C47BE4;
+        font-family: 'Agbalumo', system-ui;
     }
 
     button {
-        background-color: pink;
+        background-color: #C47BE4;
         color: white;
         cursor: pointer;
         transition: 0.3s;
     }
 
     button:hover {
-        background-color: hotpink;
+        background-color: #301CA0;
     }
 </style>
 <html>
 
 <body>
-    <h1 style="color: hotpink;">CUTE VALENTINE</h1>
-    <h4 style="font-family: Agbalumo;">by Lafiaji Samuel</h4>
+    <h1 style="color: #f29AAE;">CUTE VALENTINE MAIL SUPRISE</h1>
+    <h4 style="font-family: 'Agbalumo', system-ui; color: #7132CA;">by Lafiaji Samuel</h4>
     <!-- <h2> </h2> -->
 </body>
 
 <form onsubmit="generateLink(event)">
-    <label for="name">Name:</label>
+    <label for="name">Your Name:</label>
     <input type="text" id="name" name="name" required>
     <br><br>
 
-    <label for="email">Email:</label>
+    <label for="email">Crushes Email:</label>
     <input type="text" id="email" name="email" required>
     <h6></h6>
 
@@ -91,7 +94,7 @@
 
         // Show the generated link
         const linkDisplay = document.getElementById("shareable-link");
-        linkDisplay.innerHTML = `Share this link: <a href="${link}" target="_blank">${link}</a>`;
+        linkDisplay.innerHTML = `Share this link with your crush:\n <a href="${link}" target="_blank">${link}</a>`;
         linkDisplay.style.display = "block";
     }
 </script>
