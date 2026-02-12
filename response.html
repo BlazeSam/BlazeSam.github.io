@@ -1,99 +1,175 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Forever my baby</title>
+    <title>Envelope Interaction</title>
     <style>
         body {
-            background-image: url(./img/mail.jpeg);
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            height: 100vh;
             margin: 0;
+            height: 100vh;
+            background-image: url("./img/mail.jpg");
+            /* change this */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             overflow: hidden;
-            text-align: center;
         }
 
-        h1 {
-            color: red;
+        /* Interaction layer */
+        #interaction-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 50;
         }
 
-        h2 {
-            color: hotpink
+        /* Invisible hotspots */
+        .hotspot {
+            position: absolute;
+            cursor: pointer;
+            background: transparent;
         }
 
-        .button {
-            transition-duration: 0.4s;
+        /* Adjust these slightly if needed */
+        #yes-box {
+            top: 63%;
+            left: 43%;
+            width: 4%;
+            height: 6%;
         }
 
-        .button:hover {
-            background-color: purple;
-            /* Green */
-            color: white;
+        #no-box {
+            top: 63%;
+            left: 52%;
+            width: 4%;
+            height: 6%;
         }
 
-        .button:active {
-            background-color: #3e8e41;
-            box-shadow: 0 5px #666;
-            transform: translateY(4px);
+        /* Checkmarks */
+        .checkmark {
+            position: absolute;
+            font-size: 40px;
+            font-weight: bold;
+            display: none;
+            z-index: 100;
+        }
+
+        #yes-check {
+            top: 62%;
+            left: 43%;
+        }
+
+        #no-check {
+            top: 62%;
+            left: 52%;
+        }
+
+        /* Confetti canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 200;
         }
     </style>
 </head>
 
 <body>
 
-    <h2>I would love to be your Valentine
-        <br><br>
-        <h2>Would you please be mine? </h2>
-        <button class="button" onclick="sendEmail(Yes)">Yes</button>
-        <button onclick="sendEmail(No)">No</button>
+    <div id="interaction-layer">
+        <div id="yes-box" class="hotspot" onclick="handleClick('Yes')"></div>
+        <div id="no-box" class="hotspot" onclick="handleClick('No')"></div>
 
-        <!-- Hidden Audio -->
-        <audio id="bg-music" autoplay loop>
-            <source src="ed.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
+        <div id="yes-check" class="checkmark">✔</div>
+        <div id="no-check" class="checkmark">✔</div>
+    </div>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const audio = document.getElementById("bg-music");
+    <canvas id="confetti-canvas"></canvas>
 
-                // Ensure autoplay works after user interaction
-                document.body.addEventListener("click", function () {
-                    if (!audio.paused) {
-                        audio.play().catch(error => console.log("Autoplay blocked:", error));
-                    }
-                }, { once: true });
-            });
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const email = params.get("email");
 
-            document.addEventListener("DOMContentLoaded", function () {
-                // Get email from URL
-                const urlParams = new URLSearchParams(window.location.search);
-                const email = urlParams.get("email");
+        let alreadyClicked = false; // 🚫 spam prevention
 
-                if (!email) {
-                    alert("Email is missing! Please go back and enter your email.");
+        function handleClick(response) {
+
+            if (alreadyClicked) return; // prevent multiple clicks
+            alreadyClicked = true;
+
+            if (!email) {
+                alert("Email missing in URL.");
+                return;
+            }
+
+            // Hide both first
+            document.getElementById("yes-check").style.display = "none";
+            document.getElementById("no-check").style.display = "none";
+
+            if (response === "Yes") {
+                document.getElementById("yes-check").style.display = "block";
+                launchConfetti();
+            } else {
+                document.getElementById("no-check").style.display = "block";
+            }
+
+            fetch("http://localhost:3000/send-email", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, response })
+            })
+                .then(res => res.json())
+                .then(data => console.log("Email sent"))
+                .catch(error => console.error(error));
+        }
+
+        function launchConfetti() {
+            const canvas = document.getElementById("confetti-canvas");
+            const ctx = canvas.getContext("2d");
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const pieces = [];
+            const numberOfPieces = 200;
+
+            for (let i = 0; i < numberOfPieces; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 6 + 4,
+                    speed: Math.random() * 3 + 2,
+                    color: `hsl(${Math.random() * 360}, 100%, 50%)`
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                pieces.forEach((p) => {
+                    ctx.beginPath();
+                    ctx.fillStyle = p.color;
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    p.y += p.speed;
+                });
+
+                if (pieces.some(p => p.y < canvas.height)) {
+                    requestAnimationFrame(draw);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
                 }
+            }
 
-                window.sendEmail = function (response) {
-
-                    fetch("http://localhost:3000/send-email", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({ email, response })
-                    })
-                        .then(res => res.json())
-                        .then(data => alert("Email Sent!"))
-                        .catch(error => console.error("Error:", error));
-                };
-            });
-
-        </script>
+            draw();
+        }
+    </script>
 
 </body>
 
