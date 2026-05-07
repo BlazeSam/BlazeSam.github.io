@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<title>Love Note</title>
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Agbalumo&display=swap" rel="stylesheet">
+</head>
+
+
+<style>
+    body {
+        background-image: url(./img/hearts.jpg);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    h1,
+    label {
+        color: #C47BE4;
+
+        font-family: 'Acme', system-ui;
+    }
+
+    button {
+        background-color: #C47BE4;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background-color: #301CA0;
+    }
+</style>
+<html>
+
+<body>
+    <h1 style="color: #ff8da1;">CUTE VALENTINE MAIL SUPRISE</h1>
+    <h4 style="font-family: 'Agbalumo', system-ui; color: #7132CA;">by Lafiaji Samuel</h4>
+    <!-- <h2> </h2> -->
+</body>
+
+<form onsubmit="generateLink(event)">
+    <label for="name">Your Name:</label>
+    <input type="text" id="name" name="name" required>
+    <br><br>
+
+    <label for="email">Crushes Email:</label>
+    <input type="text" id="email" name="email" required>
+    <h6></h6>
+
+    <button onclick="return validateForm()">Submit</button>
+</form>
+
+<p id="shareable-link" style="display: none;"></p>
+
+<script>
+    function validateForm() {
+        const email = document.getElementById('email').value
+        const name = document.getElementById("name").value;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Proper email regex
+
+        if (email === "" || name === "") {
+            alert("Please fill in all fields.");
+            //return false;
+            return true;
+        }
+
+        if (!emailPattern.test(email)) {
+            alert("Please enter a valid email address.");
+            //return false;
+            return true;
+        }
+
+        return true; // Form submits if valid
+    }
+
+    function generateLink(event) {
+        event.preventDefault(); // Prevent form from actually submitting
+
+        const email = document.getElementById('email').value;
+        if (!email) {
+            alert("Please enter an email.");
+            return;
+        }
+
+        // Generate the shareable link
+        const link = `https://BlazeSam.github.io/response.html?email=${encodeURIComponent(email)}`;
+
+        // Show the generated link
+        const linkDisplay = document.getElementById("shareable-link");
+        linkDisplay.innerHTML = `Share this link with your crush:\n <a href="${link}" target="_blank">${link}</a>`;
+        linkDisplay.style.display = "block";
+    }
+</script>
+
+</html>
