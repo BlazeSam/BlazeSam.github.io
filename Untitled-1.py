@@ -1,23 +1,44 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import datetime
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import os
+from dotenv import load_dotenv
 import time
 
-driver = webdriver.Chrome()
+FIREFOX_PROFILE_PATH = "/Users/ayoyinkalafiaji/Library/Application Support/Firefox/Profiles/M0xoySU1.Profile 1"
+
+options = Options()
+options.add_argument("-profile")
+options.add_argument(FIREFOX_PROFILE_PATH)
+
+driver = webdriver.Firefox(options=options)
 driver.get('https://banner.usask.ca/StudentRegistrationSsb/ssb/registration')
-#driver.get('https://cas.usask.ca/cas')
 
-#idLogin = driver.find_element(By.ID, "username")
-#idLogin.send_keys('zqd984')
+wait = WebDriverWait(driver, 15)
 
-#passLogin = driver.find_element(By.ID, 'password')
-#passLogin.send_keys('Blazefire4ever')
+planLink = wait.until(EC.element_to_be_clickable((By.ID, "register")))
+planLink.click()
 
-#submit = driver.find_element(By.NAME, 'submit')
 
-#submit.click()
+# If not already logged in, you'll be redirected to CAS login — handle it here
+try:
+    load_dotenv()
+    idLogin = wait.until(EC.presence_of_element_located((By.ID, "username")))
+    idLogin.send_keys(os.environ["USASK_EMAIL"])
+    passLogin = driver.find_element(By.ID, "password")
+
+    WebDriverWait(driver, 15)
+    passLogin.send_keys(os.environ["USASK_PASSWORD"])
+    print(os.environ["USASK_PASSWORD"])
+    driver.find_element(By.NAME, "submit").click()
+    WebDriverWait(driver, 15)
+except Exception:
+    print("Already logged in via profile — proceeding")
+
 time.sleep(1000)
-#driver.quit()
+##driver.quit()
 
 # grid = [[1,1,1,1,1,1] for i in range(8)]
 # print(len(grid), len(grid[0]))
