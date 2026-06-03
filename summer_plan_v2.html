@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summer Plan 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bricolage+Grotesque:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f2eb;
+  --ink: #1a1814;
+  --muted: #7a756a;
+  --border: #d9d4c7;
+  --c-os: #c84b2f;       /* CMPT 332 — red */
+  --c-cd: #2563eb;       /* CalenDue — blue */
+  --c-lc: #16a34a;       /* LeetCode — green */
+  --c-ex: #7c3aed;       /* Extra — purple */
+  --c-os-bg: #fdf0ed;
+  --c-cd-bg: #eff6ff;
+  --c-lc-bg: #f0fdf4;
+  --c-ex-bg: #f5f3ff;
+  --surface: #fff;
+  --surface2: #f0ede6;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  min-height: 100vh;
+  padding: 40px 28px 80px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ── HEADER ── */
+.header {
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 24px;
+  margin-bottom: 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.header-left h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.header-left p {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.header-stats {
+  display: flex; gap: 20px;
+}
+.stat {
+  text-align: right;
+}
+.stat-num {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.stat-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* ── LEGEND ── */
+.legend {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px;
+}
+.pill {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1.5px solid;
+  cursor: default;
+}
+.pill.os { background: var(--c-os-bg); color: var(--c-os); border-color: var(--c-os); }
+.pill.cd { background: var(--c-cd-bg); color: var(--c-cd); border-color: var(--c-cd); }
+.pill.lc { background: var(--c-lc-bg); color: var(--c-lc); border-color: var(--c-lc); }
+.pill.ex { background: var(--c-ex-bg); color: var(--c-ex); border-color: var(--c-ex); }
+
+/* ── WEEKLY CADENCE ── */
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.cadence-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 36px;
+}
+.day-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 8px;
+  min-height: 120px;
+}
+.day-card .day-name {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  letter-spacing: 0.08em;
+}
+.day-card.weekend {
+  background: var(--surface2);
+}
+.block {
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 3px 6px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.block.os { background: var(--c-os-bg); color: var(--c-os); }
+.block.cd { background: var(--c-cd-bg); color: var(--c-cd); }
+.block.lc { background: var(--c-lc-bg); color: var(--c-lc); }
+.block.ex { background: var(--c-ex-bg); color: var(--c-ex); }
+.block.rest { background: #f0ede6; color: var(--muted); }
+
+/* ── MONTH TABS ── */
+.tabs {
+  display: flex; gap: 0; margin-bottom: 0;
+  border-bottom: 2px solid var(--border);
+}
+.tab {
+  padding: 10px 24px;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.15s;
+}
+.tab:hover { color: var(--ink); }
+.tab.active { color: var(--ink); border-bottom-color: var(--ink); }
+
+/* ── MONTH PANEL ── */
+.panel { display: none; padding-top: 28px; }
+.panel.active { display: block; }
+
+.month-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.focus-card {
+  padding: 16px;
+  border-radius: 12px;
+  border: 1.5px solid;
+}
+.focus-card h3 {
+  font-size: 0.65rem;
+  font-family: 'Space Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+  opacity: 0.7;
+}
+.focus-card p { font-size: 0.8rem; font-weight: 600; line-height: 1.4; }
+.focus-card.os { background: var(--c-os-bg); border-color: var(--c-os); color: var(--c-os); }
+.focus-card.cd { background: var(--c-cd-bg); border-color: var(--c-cd); color: var(--c-cd); }
+.focus-card.lc { background: var(--c-lc-bg); border-color: var(--c-lc); color: var(--c-lc); }
+.focus-card.ex { background: var(--c-ex-bg); border-color: var(--c-ex); color: var(--c-ex); }
+
+/* ── WEEKS ── */
+.week {
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.week-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.1s;
+}
+.week-header:hover { background: var(--surface2); }
+.week-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--muted);
+  background: var(--surface2);
+  padding: 3px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+.week-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  flex: 1;
+}
+.week-pills { display: flex; gap: 4px; }
+.mini-pill {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: 1.5px solid;
+}
+.mini-pill.os { background: var(--c-os-bg); color: var(--c-os); border-color: var(--c-os); }
+.mini-pill.cd { background: var(--c-cd-bg); color: var(--c-cd); border-color: var(--c-cd); }
+.mini-pill.lc { background: var(--c-lc-bg); color: var(--c-lc); border-color: var(--c-lc); }
+.mini-pill.ex { background: var(--c-ex-bg); color: var(--c-ex); border-color: var(--c-ex); }
+.chevron { color: var(--muted); font-size: 0.75rem; transition: transform 0.2s; flex-shrink: 0; }
+.week.open .chevron { transform: rotate(90deg); }
+
+.week-body { display: none; padding: 0 18px 18px; }
+.week.open .week-body { display: block; }
+
+.task-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+.task-col h4 {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.col-dot {
+  width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+}
+.col-dot.os { background: var(--c-os); }
+.col-dot.cd { background: var(--c-cd); }
+.col-dot.lc { background: var(--c-lc); }
+.col-dot.ex { background: var(--c-ex); }
+
+.task {
+  display: flex; align-items: flex-start; gap: 8px;
+  margin-bottom: 7px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.task input[type=checkbox] { flex-shrink: 0; margin-top: 2px; accent-color: var(--ink); }
+.task span { color: #3a3630; }
+.task.done span { text-decoration: line-through; color: var(--muted); }
+
+.tip {
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: var(--surface2);
+  border-radius: 8px;
+  border-left: 3px solid var(--ink);
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-family: 'Space Mono', monospace;
+}
+.tip strong { color: var(--ink); }
+
+/* ── MILESTONE BANNER ── */
+.milestone {
+  background: var(--ink);
+  color: #f5f2eb;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.milestone-icon { font-size: 1.2rem; }
+
+/* ── PROGRESS ── */
+.progress-section { margin-bottom: 28px; }
+.prog-row {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+}
+.prog-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  width: 100px;
+  flex-shrink: 0;
+}
+.prog-bar-bg {
+  flex: 1; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden;
+}
+.prog-bar { height: 100%; border-radius: 3px; transition: width 0.4s; }
+.prog-pct {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--muted);
+  width: 32px;
+  text-align: right;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h1>Summer<br>Plan '25</h1>
+    <p>// CMPT 332 · CalenDue · LeetCode · Projects</p>
+  </div>
+  <div class="header-stats">
+    <div class="stat">
+      <div class="stat-num" style="color:var(--c-os)">12</div>
+      <div class="stat-label">Weeks</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" style="color:var(--c-lc)">~60</div>
+      <div class="stat-label">LeetCode</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" style="color:var(--c-cd)">3</div>
+      <div class="stat-label">CD PRs</div>
+    </div>
+  </div>
+</div>
+
+<!-- LEGEND -->
+<div class="section-label">Tracks</div>
+<div class="legend">
+  <div class="pill os">● CMPT 332 / C</div>
+  <div class="pill cd">● CalenDue (Next.js + TS)</div>
+  <div class="pill lc">● LeetCode</div>
+  <div class="pill ex">● Extra Projects</div>
+</div>
+
+<!-- WEEKLY CADENCE -->
+<div class="section-label" style="margin-top:8px">Weekly Cadence — 2–3 hrs/day</div>
+<div class="cadence-grid">
+  <div class="day-card">
+    <div class="day-name">Mon</div>
+    <div class="block os">C / OS concepts</div>
+    <div class="block lc">LeetCode ×1</div>
+  </div>
+  <div class="day-card">
+    <div class="day-name">Tue</div>
+    <div class="block cd">TypeScript / Next.js</div>
+    <div class="block lc">LeetCode ×1</div>
+  </div>
+  <div class="day-card">
+    <div class="day-name">Wed</div>
+    <div class="block os">C / OS concepts</div>
+    <div class="block lc">LeetCode ×1</div>
+  </div>
+  <div class="day-card">
+    <div class="day-name">Thu</div>
+    <div class="block cd">CalenDue / React</div>
+    <div class="block lc">LeetCode ×1</div>
+  </div>
+  <div class="day-card">
+    <div class="day-name">Fri</div>
+    <div class="block os">C exercises</div>
+    <div class="block rest">Weekly review</div>
+  </div>
+  <div class="day-card weekend">
+    <div class="day-name">Sat</div>
+    <div class="block cd">CalenDue PR / build</div>
+    <div class="block lc">LeetCode ×2</div>
+  </div>
+  <div class="day-card weekend">
+    <div class="day-name">Sun</div>
+    <div class="block os">OS reading / xv6</div>
+    <div class="block ex">Side project</div>
+    <div class="block rest">Rest if needed</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" onclick="showMonth(0)">June</button>
+  <button class="tab" onclick="showMonth(1)">July</button>
+  <button class="tab" onclick="showMonth(2)">August</button>
+</div>
+
+<!-- ══════════════ JUNE ══════════════ -->
+<div class="panel active" id="p0">
+
+  <div class="month-intro">
+    <div class="focus-card os">
+      <h3>CMPT 332</h3>
+      <p>Pointers, memory, data structures, file I/O</p>
+    </div>
+    <div class="focus-card cd">
+      <h3>CalenDue</h3>
+      <p>TypeScript basics → first 2 performance PRs</p>
+    </div>
+    <div class="focus-card lc">
+      <h3>LeetCode</h3>
+      <p>Arrays, strings, hashmaps. Easy → Medium</p>
+    </div>
+    <div class="focus-card ex">
+      <h3>Extra</h3>
+      <p>Portfolio site live on GitHub Pages</p>
+    </div>
+  </div>
+
+  <!-- WK 1 -->
+  <div class="week open" id="j1">
+    <div class="week-header" onclick="toggle('j1')">
+      <div class="week-num">WK 01</div>
+      <div class="week-title">C memory mastery + TS setup + arrays</div>
+      <div class="week-pills">
+        <div class="mini-pill os">332</div>
+        <div class="mini-pill cd">CD</div>
+        <div class="mini-pill lc">LC</div>
+      </div>
+      <div class="chevron">▶</div>
+    </div>
+    <div class="week-body">
+      <div class="task-cols">
+        <div class="task-col">
+          <h4><div class="col-dot os"></div>CMPT 332 / C</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Pointers to pointers — draw memory diagrams by hand</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>malloc / calloc / realloc / free — zero memory leaks</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Pointer arithmetic on arrays</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Build a dynamic array (vector) from scratch in C</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Run Valgrind on everything you write this week</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot cd"></div>CalenDue / TS</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Set up tsconfig, understand strict mode</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Types vs interfaces — know the difference</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Clone CalenDue repo and run it locally</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Read the Next.js App Router docs (30 min)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Find where fonts are imported in the codebase</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot lc"></div>LeetCode (×5 + ×2 Sat)</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Two Sum (Easy)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Valid Parentheses (Easy)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Best Time to Buy and Sell Stock (Easy)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Contains Duplicate (Easy)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Product of Array Except Self (Medium)</span></div>
+        </div>
+      </div>
+      <div class="tip"><strong>C tip:</strong> Every time you malloc, write the free() immediately. Build the habit before the course does it for you.</div>
+    </div>
+  </div>
+
+  <!-- WK 2 -->
+  <div class="week" id="j2">
+    <div class="week-header" onclick="toggle('j2')">
+      <div class="week-num">WK 02</div>
+      <div class="week-title">C linked lists + TS generics + first CalenDue PR</div>
+      <div class="week-pills">
+        <div class="mini-pill os">332</div>
+        <div class="mini-pill cd">CD</div>
+        <div class="mini-pill lc">LC</div>
+      </div>
+      <div class="chevron">▶</div>
+    </div>
+    <div class="week-body">
+      <div class="task-cols">
+        <div class="task-col">
+          <h4><div class="col-dot os"></div>CMPT 332 / C</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Singly linked list: insert, delete, search</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Doubly linked list from scratch</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Reverse a linked list in-place (no cheating)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Struct padding and memory alignment</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot cd"></div>CalenDue PR #1</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Add font-display: swap to all Google Font imports</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Fix the 1 link without descriptive text (SEO audit)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>TS generics — write a typed Stack&lt;T&gt; in practice</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Open PR, write a clear description referencing Lighthouse</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot lc"></div>LeetCode — Two Pointers</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Valid Palindrome (Easy)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Two Sum II (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>3Sum (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Container With Most Water (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Trapping Rain Water (Hard — try it)</span></div>
+        </div>
+      </div>
+      <div class="tip"><strong>CalenDue tip:</strong> font-display: swap is literally a one-line fix worth ~10ms. Open a PR for it this week — it proves you can ship, not just plan.</div>
+    </div>
+  </div>
+
+  <!-- WK 3 -->
+  <div class="week" id="j3">
+    <div class="week-header" onclick="toggle('j3')">
+      <div class="week-num">WK 03</div>
+      <div class="week-title">C stacks/queues + remove 103KB unused CSS</div>
+      <div class="week-pills">
+        <div class="mini-pill os">332</div>
+        <div class="mini-pill cd">CD</div>
+        <div class="mini-pill lc">LC</div>
+      </div>
+      <div class="chevron">▶</div>
+    </div>
+    <div class="week-body">
+      <div class="task-cols">
+        <div class="task-col">
+          <h4><div class="col-dot os"></div>CMPT 332 / C</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Stack with array + stack with linked list</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Queue and circular queue</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Function pointers — comparator pattern</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>qsort() with custom comparator</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Read Tanenbaum Ch.1 (OS overview)</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot cd"></div>CalenDue PR #2</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Check Tailwind content config — is it purging unused classes?</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Remove any global CSS imports not needed on landing page</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Audit non-composited animations — switch to CSS transform</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Re-run Lighthouse, compare scores</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot lc"></div>LeetCode — Sliding Window</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Best Time to Buy/Sell Stock (Easy)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Longest Substring Without Repeating (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Longest Repeating Character Replacement (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Permutation in String (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Minimum Window Substring (Hard)</span></div>
+        </div>
+      </div>
+      <div class="tip"><strong>CD tip:</strong> 103KB of unused CSS is almost certainly from unused Tailwind classes. Check that `content` in tailwind.config.js is scoped to your actual component paths.</div>
+    </div>
+  </div>
+
+  <!-- WK 4 -->
+  <div class="week" id="j4">
+    <div class="week-header" onclick="toggle('j4')">
+      <div class="week-num">WK 04</div>
+      <div class="week-title">C file I/O + Portfolio site launch + review week</div>
+      <div class="week-pills">
+        <div class="mini-pill os">332</div>
+        <div class="mini-pill ex">Portfolio</div>
+        <div class="mini-pill lc">LC</div>
+      </div>
+      <div class="chevron">▶</div>
+    </div>
+    <div class="week-body">
+      <div class="task-cols">
+        <div class="task-col">
+          <h4><div class="col-dot os"></div>CMPT 332 / C</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>fopen, fread, fwrite, fclose, fseek</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Binary vs text file handling</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Mergesort and quicksort from scratch</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Know Big-O for every sort you implement</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Redo week 1–2 C code from memory (no reference)</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot ex"></div>Portfolio (weekend)</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Build portfolio in HTML/CSS — keep it simple</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Link: GitHub, LeetCode tracker repo, CalenDue</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Deploy to GitHub Pages</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Run Lighthouse on it — score yourself</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot lc"></div>LeetCode — Hashmaps</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Valid Anagram (Easy)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Group Anagrams (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Top K Frequent Elements (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Encode and Decode Strings (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Longest Consecutive Sequence (Medium)</span></div>
+        </div>
+      </div>
+      <div class="tip"><strong>Milestone check:</strong> 2 CalenDue PRs merged ✓ · Portfolio live ✓ · C data structures solid ✓ · ~20 LeetCode done ✓</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════ JULY ══════════════ -->
+<div class="panel" id="p1">
+
+  <div class="month-intro">
+    <div class="focus-card os">
+      <h3>CMPT 332</h3>
+      <p>Processes, pthreads, semaphores, deadlock, BSTs</p>
+    </div>
+    <div class="focus-card cd">
+      <h3>CalenDue</h3>
+      <p>Fix 734KB JS issue with dynamic imports + UI work</p>
+    </div>
+    <div class="focus-card lc">
+      <h3>LeetCode</h3>
+      <p>Trees, graphs, binary search. Move to Medium+</p>
+    </div>
+    <div class="focus-card ex">
+      <h3>Extra</h3>
+      <p>Start Tamagotchi prototype (React + Claude API)</p>
+    </div>
+  </div>
+
+  <!-- WK 5 -->
+  <div class="week open" id="j5">
+    <div class="week-header" onclick="toggle('j5')">
+      <div class="week-num">WK 05</div>
+      <div class="week-title">C processes (fork/exec) + Next.js dynamic imports</div>
+      <div class="week-pills">
+        <div class="mini-pill os">332</div>
+        <div class="mini-pill cd">CD</div>
+        <div class="mini-pill lc">LC</div>
+      </div>
+      <div class="chevron">▶</div>
+    </div>
+    <div class="week-body">
+      <div class="task-cols">
+        <div class="task-col">
+          <h4><div class="col-dot os"></div>CMPT 332 / C — Processes</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>fork() — understand parent/child relationship</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>exec() family — replace process image</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>wait() / waitpid() — avoid zombie processes</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Signals: SIGINT, SIGTERM, custom handlers</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Read Tanenbaum Ch.2 sections 2.1–2.2</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot cd"></div>CalenDue PR #3 — 734KB JS</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Identify heavy components with next/bundle-analyzer</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Convert dashboard imports to dynamic() with loading states</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Move any chart/editor libs to dynamic imports</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Run Lighthouse — target 70+ performance score</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot lc"></div>LeetCode — Binary Trees</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Invert Binary Tree (Easy)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Maximum Depth of Binary Tree (Easy)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Balanced Binary Tree (Easy)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Lowest Common Ancestor (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Binary Tree Level Order Traversal (Medium)</span></div>
+        </div>
+      </div>
+      <div class="tip"><strong>332 tip:</strong> fork() is the hardest concept to visualize. Draw the process tree every time you call it — after 10 diagrams it clicks permanently.</div>
+    </div>
+  </div>
+
+  <!-- WK 6 -->
+  <div class="week" id="j6">
+    <div class="week-header" onclick="toggle('j6')">
+      <div class="week-num">WK 06</div>
+      <div class="week-title">pthreads + mutexes + CalenDue UI polish</div>
+      <div class="week-pills">
+        <div class="mini-pill os">332</div>
+        <div class="mini-pill cd">CD</div>
+        <div class="mini-pill lc">LC</div>
+      </div>
+      <div class="chevron">▶</div>
+    </div>
+    <div class="week-body">
+      <div class="task-cols">
+        <div class="task-col">
+          <h4><div class="col-dot os"></div>CMPT 332 / C — Threads</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>pthread_create, pthread_join, pthread_exit</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Mutex: lock, unlock, trylock</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Demonstrate a race condition then fix it</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Read/write locks (pthread_rwlock)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Read Tanenbaum 2.2–2.3 (threads + mutual exclusion)</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot cd"></div>CalenDue — UI/UX</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Audit the mobile experience end-to-end</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Identify 3 UX friction points in the upload flow</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Write up findings as a GitHub issue with screenshots</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Implement 1 UI improvement (loading states, error copy)</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot lc"></div>LeetCode — BST</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Validate BST (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Kth Smallest Element in BST (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Construct BST from Preorder (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Binary Tree Right Side View (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Serialize and Deserialize Binary Tree (Hard)</span></div>
+        </div>
+      </div>
+      <div class="tip"><strong>pthreads tip:</strong> This is literally the content of CMPT 332 assignments. Every thread program you write this month is practice for a graded deliverable.</div>
+    </div>
+  </div>
+
+  <!-- WK 7 -->
+  <div class="week" id="j7">
+    <div class="week-header" onclick="toggle('j7')">
+      <div class="week-num">WK 07</div>
+      <div class="week-title">Semaphores + IPC + Tamagotchi prototype starts</div>
+      <div class="week-pills">
+        <div class="mini-pill os">332</div>
+        <div class="mini-pill ex">Tama</div>
+        <div class="mini-pill lc">LC</div>
+      </div>
+      <div class="chevron">▶</div>
+    </div>
+    <div class="week-body">
+      <div class="task-cols">
+        <div class="task-col">
+          <h4><div class="col-dot os"></div>CMPT 332 / C — Sync</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Semaphores: sem_init, sem_wait, sem_post</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Producer-consumer problem with semaphores</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Dining philosophers problem</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Pipes: pipe(), read(), write() between processes</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Read Tanenbaum 2.3–2.4 (semaphores + monitors)</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot ex"></div>Tamagotchi Prototype</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Set up React + Vite + TypeScript project</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Design pet state: hunger, hydration, energy levels</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Build basic pet component with mood states</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Hook up Claude API for pet personality (one endpoint)</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot lc"></div>LeetCode — Graphs</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Number of Islands (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Clone Graph (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Max Area of Island (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Pacific Atlantic Water Flow (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Course Schedule (Medium)</span></div>
+        </div>
+      </div>
+      <div class="tip"><strong>Semaphore tip:</strong> Producer-consumer and dining philosophers are almost guaranteed to appear in CMPT 332 assignments. Build them now until they're muscle memory.</div>
+    </div>
+  </div>
+
+  <!-- WK 8 -->
+  <div class="week" id="j8">
+    <div class="week-header" onclick="toggle('j8')">
+      <div class="week-num">WK 08</div>
+      <div class="week-title">xv6 first read + deadlock theory + CalenDue security</div>
+      <div class="week-pills">
+        <div class="mini-pill os">332</div>
+        <div class="mini-pill cd">CD</div>
+        <div class="mini-pill lc">LC</div>
+      </div>
+      <div class="chevron">▶</div>
+    </div>
+    <div class="week-body">
+      <div class="task-cols">
+        <div class="task-col">
+          <h4><div class="col-dot os"></div>CMPT 332 / C — xv6</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Clone xv6: github.com/mit-pdos/xv6-public</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Read proc.h and proc.c — understand PCB structure</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Trace a fork() call through the xv6 source</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Read Tanenbaum Ch.6 (deadlock) — Coffman conditions</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot cd"></div>CalenDue — Security</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Add security headers to next.config.js (CSP, HSTS, COOP, XFO)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Fix the Chrome DevTools issues panel warnings</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Re-run Lighthouse Best Practices — target 100</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot lc"></div>LeetCode — Binary Search</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Binary Search (Easy)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Search a 2D Matrix (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Find Minimum in Rotated Sorted Array (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Search in Rotated Sorted Array (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Time Based Key-Value Store (Medium)</span></div>
+        </div>
+      </div>
+      <div class="tip"><strong>Milestone check:</strong> 734KB JS fix shipped ✓ · pthreads/semaphores solid ✓ · xv6 source read ✓ · ~40 LeetCode done ✓ · Tamagotchi prototype running ✓</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════ AUGUST ══════════════ -->
+<div class="panel" id="p2">
+
+  <div class="month-intro">
+    <div class="focus-card os">
+      <h3>CMPT 332</h3>
+      <p>Scheduling, virtual memory, file systems, xv6 deep dive</p>
+    </div>
+    <div class="focus-card cd">
+      <h3>CalenDue</h3>
+      <p>New feature, Canvas LMS integration, score 80+</p>
+    </div>
+    <div class="focus-card lc">
+      <h3>LeetCode</h3>
+      <p>DP, heaps, intervals. Consolidate weak topics</p>
+    </div>
+    <div class="focus-card ex">
+      <h3>Extra</h3>
+      <p>Hackathon: ship the Wellness Tamagotchi</p>
+    </div>
+  </div>
+
+  <!-- WK 9 -->
+  <div class="week open" id="j9">
+    <div class="week-header" onclick="toggle('j9')">
+      <div class="week-num">WK 09</div>
+      <div class="week-title">Process scheduling + CalenDue new feature scoping</div>
+      <div class="week-pills">
+        <div class="mini-pill os">332</div>
+        <div class="mini-pill cd">CD</div>
+        <div class="mini-pill lc">LC</div>
+      </div>
+      <div class="chevron">▶</div>
+    </div>
+    <div class="week-body">
+      <div class="task-cols">
+        <div class="task-col">
+          <h4><div class="col-dot os"></div>CMPT 332 / C — Scheduling</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>FCFS, SJF, Round Robin — implement each in C</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Priority scheduling + aging to prevent starvation</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Multilevel queue scheduling</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Read xv6 scheduler.c — understand round-robin in real code</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Read Tanenbaum 2.5 (scheduling)</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot cd"></div>CalenDue — Feature</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Identify one feature you can own end-to-end</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Write a GitHub issue with design + acceptance criteria</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Get team sign-off before writing code</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Start implementation — use TypeScript strictly</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot lc"></div>LeetCode — Heap / Priority Queue</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Kth Largest Element in Array (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Last Stone Weight (Easy)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>K Closest Points to Origin (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Task Scheduler (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Find Median from Data Stream (Hard)</span></div>
+        </div>
+      </div>
+      <div class="tip"><strong>Scheduling tip:</strong> Implement Round Robin with a real queue in C, not pseudo-code. You'll almost certainly need to modify a scheduler in xv6 for an assignment.</div>
+    </div>
+  </div>
+
+  <!-- WK 10 -->
+  <div class="week" id="j10">
+    <div class="week-header" onclick="toggle('j10')">
+      <div class="week-num">WK 10</div>
+      <div class="week-title">Virtual memory + CalenDue feature ship + DP intro</div>
+      <div class="week-pills">
+        <div class="mini-pill os">332</div>
+        <div class="mini-pill cd">CD</div>
+        <div class="mini-pill lc">LC</div>
+      </div>
+      <div class="chevron">▶</div>
+    </div>
+    <div class="week-body">
+      <div class="task-cols">
+        <div class="task-col">
+          <h4><div class="col-dot os"></div>CMPT 332 / C — Memory</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Address binding: compile, load, runtime</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Paging: page tables, TLB, page faults</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Page replacement: FIFO, LRU, Optimal</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Thrashing — what it is and how to prevent it</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Read Tanenbaum Ch.3 (memory management)</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot cd"></div>CalenDue — Ship Feature</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Complete feature implementation</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Write tests for your new code</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Open PR with before/after screenshots</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Run final Lighthouse — aim for 80+ performance</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot lc"></div>LeetCode — DP 1D</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Climbing Stairs (Easy)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Min Cost Climbing Stairs (Easy)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>House Robber (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>House Robber II (Medium)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Longest Palindromic Substring (Medium)</span></div>
+        </div>
+      </div>
+      <div class="tip"><strong>Virtual memory tip:</strong> LRU page replacement is a LeetCode problem too (LRU Cache, Hard). Solve it this week — OS theory and coding practice in one shot.</div>
+    </div>
+  </div>
+
+  <!-- WK 11-12 -->
+  <div class="week" id="j11">
+    <div class="week-header" onclick="toggle('j11')">
+      <div class="week-num">WK 11–12</div>
+      <div class="week-title">🐾 Hackathon sprint + 332 final review</div>
+      <div class="week-pills">
+        <div class="mini-pill ex">Hackathon</div>
+        <div class="mini-pill os">332 review</div>
+        <div class="mini-pill lc">LC</div>
+      </div>
+      <div class="chevron">▶</div>
+    </div>
+    <div class="week-body">
+      <div class="task-cols">
+        <div class="task-col">
+          <h4><div class="col-dot ex"></div>Wellness Tamagotchi</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>React pet UI — pixel art + mood animations</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Express backend: water/food/activity endpoints</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Claude API: pet personality + food photo logging</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Raspberry Pi + touchscreen (stretch goal)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Demo video + submission</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot os"></div>332 Pre-semester Review</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Rewrite: dynamic array, linked list, stack, queue from scratch</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Rewrite: producer-consumer and dining philosophers</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Trace fork() + exec() on paper (no computer)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Read xv6 — understand trap.c and syscall.c</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Review all 5 Tanenbaum chapters you've covered</span></div>
+        </div>
+        <div class="task-col">
+          <h4><div class="col-dot lc"></div>LeetCode — Consolidate</h4>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Redo 5 problems you got wrong — no hints</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>LRU Cache (Hard) — ties to OS memory</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Merge K Sorted Lists (Hard)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Word Search II (Hard)</span></div>
+          <div class="task"><input type="checkbox" onchange="save(this)"><span>Mock interview yourself: 2 problems, 45 min timer</span></div>
+        </div>
+      </div>
+      <div class="tip"><strong>Final milestone:</strong> Enter September having already implemented everything CMPT 332 will assign. That's the whole goal.</div>
+    </div>
+  </div>
+
+  <div class="milestone">
+    <div class="milestone-icon">🎯</div>
+    <div>
+      <strong>End of summer:</strong> 3+ CalenDue PRs merged · Lighthouse score 80+ · ~60 LeetCode solved ·
+      All CMPT 332 C topics pre-built · Tamagotchi shipped · TypeScript comfortable · Portfolio live
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showMonth(i) {
+  document.querySelectorAll('.panel').forEach((p,j) => p.classList.toggle('active', i===j));
+  document.querySelectorAll('.tab').forEach((t,j) => t.classList.toggle('active', i===j));
+}
+function toggle(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+function save(cb) {
+  const span = cb.closest('.task').querySelector('span');
+  cb.closest('.task').classList.toggle('done', cb.checked);
+  const store = JSON.parse(localStorage.getItem('sp2') || '{}');
+  store[span.textContent.trim()] = cb.checked;
+  localStorage.setItem('sp2', JSON.stringify(store));
+}
+window.addEventListener('load', () => {
+  const store = JSON.parse(localStorage.getItem('sp2') || '{}');
+  document.querySelectorAll('.task').forEach(t => {
+    const key = t.querySelector('span').textContent.trim();
+    if (store[key]) {
+      t.querySelector('input').checked = true;
+      t.classList.add('done');
+    }
+  });
+});
+</script>
+</body>
+</html>
