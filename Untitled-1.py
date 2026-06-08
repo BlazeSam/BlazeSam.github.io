@@ -1,12 +1,20 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 import os
 from dotenv import load_dotenv
+from datetime import datetime , timedelta
 import time
 
+gap = timedelta(minutes=5)
+now = datetime.now()
+
+# while now != gap:
+#     pass
+# if now == gap:
+#     print("time module is working ")
 FIREFOX_PROFILE_PATH = "/Users/ayoyinkalafiaji/Library/Application Support/Firefox/Profiles/M0xoySU1.Profile 1"
 
 options = Options()
@@ -37,6 +45,26 @@ try:
 except Exception:
     print("Already logged in via profile — proceeding")
 
+#register classees
+# button = wait.until(EC.element_to_be_clickable((By.ID, "register")))
+# button.click()
+
+choice = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#s2id_txt_term .select2-choice")))
+choice.click()
+
+searchBox = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#select2-drop .select2-input")))
+searchBox.send_keys("2026 Fall Term")
+
+result = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[@id='select2-drop']//li[contains(., '2026 Fall Term')]")))
+result.click()
+
+
+button = wait.until(EC.element_to_be_clickable((By.ID, "term-go")))
+button.click()
+
+button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "[aria-label='Plans']")))
+#driver.find_element(By.CSS_SELECTOR, "[aria-label='Close']")
+button.click()
 time.sleep(1000)
 ##driver.quit()
 
