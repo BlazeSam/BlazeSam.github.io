@@ -21,15 +21,15 @@ def launch_gui():
 
     pad = {"padx": 20, "pady": 8}
 
-    tk.Label(root, text="NSID:", fg="white").grid(row=0, column=0, sticky="w", **pad)
+    tk.Label(root, text="NSID:").grid(row=0, column=0, sticky="w", **pad)
     email_var = tk.StringVar(value=os.environ.get("USASK_EMAIL", ""))
     tk.Entry(root, textvariable=email_var, width=30).grid(row=0, column=1, **pad)
 
-    tk.Label(root, text="Password:", fg="white").grid(row=1, column=0, sticky="w", **pad)
+    tk.Label(root, text="Password:").grid(row=1, column=0, sticky="w", **pad)
     pass_var = tk.StringVar(value=os.environ.get("USASK_PASSWORD", ""))
     tk.Entry(root, textvariable=pass_var, show="*", width=30).grid(row=1, column=1, **pad)
 
-    tk.Label(root, text="Run at (HH:MM, 24h):", fg="white").grid(row=2, column=0, sticky="w", **pad)
+    tk.Label(root, text="Run at (HH:MM, 24h):").grid(row=2, column=0, sticky="w", **pad)
     time_var = tk.StringVar(value="16:15")
     tk.Entry(root, textvariable=time_var, width=30).grid(row=2, column=1, **pad)
 
