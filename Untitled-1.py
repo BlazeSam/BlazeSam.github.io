@@ -18,23 +18,26 @@ def launch_gui():
     root = tk.Tk()
     root.title("USask Registration Bot")
     root.resizable(False, False)
+    root.configure(bg="#2b2b2b")
 
     pad = {"padx": 20, "pady": 8}
+    label_opts = {"bg": "#2b2b2b", "fg": "#ffffff"}
+    entry_opts = {"bg": "#3c3f41", "fg": "#ffffff", "insertbackground": "#ffffff"}
 
-    tk.Label(root, text="NSID:").grid(row=0, column=0, sticky="w", **pad)
+    tk.Label(root, text="NSID:", **label_opts).grid(row=0, column=0, sticky="w", **pad)
     email_var = tk.StringVar(value=os.environ.get("USASK_EMAIL", ""))
-    tk.Entry(root, textvariable=email_var, width=30).grid(row=0, column=1, **pad)
+    tk.Entry(root, textvariable=email_var, width=30, **entry_opts).grid(row=0, column=1, **pad)
 
-    tk.Label(root, text="Password:").grid(row=1, column=0, sticky="w", **pad)
+    tk.Label(root, text="Password:", **label_opts).grid(row=1, column=0, sticky="w", **pad)
     pass_var = tk.StringVar(value=os.environ.get("USASK_PASSWORD", ""))
-    tk.Entry(root, textvariable=pass_var, show="*", width=30).grid(row=1, column=1, **pad)
+    tk.Entry(root, textvariable=pass_var, show="*", width=30, **entry_opts).grid(row=1, column=1, **pad)
 
-    tk.Label(root, text="Run at (HH:MM, 24h):").grid(row=2, column=0, sticky="w", **pad)
+    tk.Label(root, text="Run at (HH:MM, 24h):", **label_opts).grid(row=2, column=0, sticky="w", **pad)
     time_var = tk.StringVar(value="16:15")
-    tk.Entry(root, textvariable=time_var, width=30).grid(row=2, column=1, **pad)
+    tk.Entry(root, textvariable=time_var, width=30, **entry_opts).grid(row=2, column=1, **pad)
 
     status_var = tk.StringVar()
-    tk.Label(root, textvariable=status_var, fg="green").grid(row=3, column=0, columnspan=2, pady=4)
+    tk.Label(root, textvariable=status_var, fg="#4ec94e", bg="#2b2b2b").grid(row=3, column=0, columnspan=2, pady=4)
 
     def save_and_start():
         email    = email_var.get().strip()
@@ -62,7 +65,7 @@ def launch_gui():
         status_var.set(f"Saved! Will run at {run_at.strftime('%H:%M')}")
         root.after(1500, root.destroy)
 
-    tk.Button(root, text="Save & Start", command=save_and_start).grid(row=4, column=0, columnspan=2, pady=12)
+    tk.Button(root, text="Save & Start", command=save_and_start, bg="#4a90d9", fg="#ffffff", activebackground="#357abd", activeforeground="#ffffff").grid(row=4, column=0, columnspan=2, pady=12)
     root.mainloop()
 
 launch_gui()
