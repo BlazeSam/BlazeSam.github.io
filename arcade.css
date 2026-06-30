@@ -14,8 +14,8 @@ body {
     background: repeating-linear-gradient(to bottom,
             #0f0a1e,
             #0f0a1e 2px,
-            lighten(#0f0a1e, 3%) 2px,
-            lighten(#0f0a1e, 3%) 4px);
+            #150e29 2px,
+            #150e29 4px);
 }
 
 .arcade-text {
