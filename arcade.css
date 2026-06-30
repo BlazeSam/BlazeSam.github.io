@@ -29,7 +29,8 @@ body {
     width: 100%;
     text-align: center;
     margin: auto;
-    font-size: 40px;
+    /* font-size: 40px; */
+    
     line-height: 40px;
     letter-spacing: 5px;
     text-shadow: -2px 0 0 #fdff2a,

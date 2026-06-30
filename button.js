@@ -15,3 +15,9 @@ window.addEventListener("keydown", (event) => {
 
 // Tap / click (mobile + mouse) — click fires on touch too, no touch events needed
 document.getElementById("screen0").addEventListener("click", showLogin);
+
+
+const button = document.getElementById("continue");
+button.addEventListener("click", (event) => {
+    window.location.href = "./admin.html";
+})
