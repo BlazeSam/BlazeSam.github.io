@@ -8,4 +8,5 @@ window.addEventListener("keydown", (event) => {
         document.getElementById("screen0").setAttribute("hidden", "");
         document.getElementById("screen1").removeAttribute("hidden", "");
     }
+
 });

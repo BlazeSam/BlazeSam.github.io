@@ -18,7 +18,7 @@ body {
             lighten(#0f0a1e, 3%) 4px);
 }
 
-div {
+.arcade-text {
     position: absolute;
     top: 0;
     left: 0;
@@ -38,6 +38,7 @@ div {
         4px 0 0 #4405fc;
     animation: blink 1s steps(4, start) infinite;
 }
+
 
 @keyframes blink {
     to {
